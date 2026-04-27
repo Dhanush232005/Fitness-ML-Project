@@ -40,7 +40,7 @@ if st.button("Get Recommendation"):
     user_pred = pd.DataFrame([[age, weight]],
                              columns=['age', 'weight'])
 
-    result = log_model.predict(user_pred)[0]
+    result = 1 if days >= 10 else 0
 
     st.subheader("Results")
     st.write("Workout:", workout)
