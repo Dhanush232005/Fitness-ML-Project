@@ -34,8 +34,18 @@ if st.button("Get Recommendation"):
     user = pd.DataFrame([[age, weight, days, goal]],
                         columns=['age', 'weight', 'days_active', 'goal'])
 
-    dist, ind = knn.kneighbors(user)
-    workout = data.iloc[ind[0]]['workout'].values[0]
+filtered_data = data[data['goal'] == goal]
+
+X_filtered = filtered_data[['age', 'weight', 'days_active', 'goal']]
+
+from sklearn.neighbors import NearestNeighbors
+knn_local = NearestNeighbors(n_neighbors=1)
+knn_local.fit(X_filtered)
+
+dist, ind = knn_local.kneighbors(user)
+
+workout = filtered_data.iloc[ind[0]]['workout'].values[0]
+  
 
     user_pred = pd.DataFrame([[age, weight]],
                              columns=['age', 'weight'])
